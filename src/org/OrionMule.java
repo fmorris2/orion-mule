@@ -16,6 +16,9 @@ public class OrionMule extends Mission implements CommandReceiver
 	private CommandReceiver orion_main;
 	private OrionMuleWorkerManager workerManager = new OrionMuleWorkerManager(this);
 	
+	public String slaveName;
+	public boolean hasOrder, shouldLogin, hasBeenTradedWith;
+	
 	public OrionMule(VikingScript script)
 	{
 		super(script);

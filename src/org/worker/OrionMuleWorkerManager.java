@@ -7,11 +7,8 @@ import viking.framework.worker.Worker;
 import viking.framework.worker.WorkerManager;
 
 public class OrionMuleWorkerManager extends WorkerManager<OrionMule>
-{
-	public String slaveName;
-	public boolean hasOrder, shouldLogin, hasBeenTradedWith;
-	
-	private Worker<OrionMule> tradeSlave;
+{	
+	private Worker<OrionMule> tradeSlave, waitForOrder;
 	
 	public OrionMuleWorkerManager(OrionMule mission)
 	{
@@ -22,6 +19,9 @@ public class OrionMuleWorkerManager extends WorkerManager<OrionMule>
 	@Override
 	public Worker<OrionMule> decide()
 	{
+		if(mission.hasOrder)
+			return tradeSlave;
+		
 		return null;
 	}
 
