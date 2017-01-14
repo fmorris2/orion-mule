@@ -43,6 +43,12 @@ public class TradeSlave extends Worker<OrionMule>
 			if(client.isLoggedIn())
 				myPos = myPosition();
 		}
+		else if(Timing.timeFromMark(mission.orderStartTime) > FAIL_SAFE)
+		{
+			script.log(this, false, "Failsafe reached! Resetting....");
+			mission.hasOrder = false;
+			mission.ORION_MAIN.receiveCommand("mule:reset");
+		}
 		else if(myPos.distance(mission.slavePos) < SLAVE_DIST_THRESH)
 		{
 			mission.shouldLogin = true;
@@ -68,13 +74,6 @@ public class TradeSlave extends Worker<OrionMule>
 			script.log(this, false, "Mule pos: " + myPos);
 			script.log(this, false, "Slave pos: " + mission.slavePos);
 			script.log(this, false, "Distance: " + myPos.distance(mission.slavePos));
-			
-			if(Timing.timeFromMark(mission.orderStartTime) > FAIL_SAFE)
-			{
-				script.log(this, false, "Failsafe reached! Resetting....");
-				mission.hasOrder = false;
-				mission.ORION_MAIN.receiveCommand("mule:reset");
-			}
 		}
 			
 	}
