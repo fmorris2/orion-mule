@@ -94,7 +94,7 @@ public class OrionMule extends Mission implements CommandReceiver
 		for(String part : firstParts)
 		{
 			String[] secondParts = part.split(":");
-			if(secondParts.length == 0) return;
+			if(secondParts.length < 2) return;
 			
 			//set vars
 			String key = secondParts[0], val = secondParts[1];
