@@ -42,12 +42,17 @@ public class TradeSlave extends Worker<OrionMule>
 			if(client.isLoggedIn())
 				myPos = myPosition();
 		}
-		else if(myPosition().distance(mission.slavePos) < SLAVE_DIST_THRESH)
+		else if(myPos.distance(mission.slavePos) < SLAVE_DIST_THRESH)
 		{
 			mission.shouldLogin = true;
 			if(mission.hasBeenTradedWith)
 			{
 				script.log(this, false, "Received trade request from slave! Going through trade process....");
+			}
+			else if(worlds.getCurrentWorld() != mission.world)
+			{
+				script.log(this, false, "Hopping to slave world " + mission.world);
+				worlds.hop(mission.world);
 			}
 			else
 				script.log(this, false, "Waiting for trade request from slave");
@@ -58,12 +63,6 @@ public class TradeSlave extends Worker<OrionMule>
 			
 			if(client.isLoggedIn())
 				logoutTab.logOut();
-			
-			if(bot.getWorld() != mission.world)
-			{
-				script.log(this, false, "Hopping to slave world " + mission.world);
-				bot.setWorld(mission.world);
-			}
 		}
 			
 	}
