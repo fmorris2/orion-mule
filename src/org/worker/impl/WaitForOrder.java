@@ -25,6 +25,7 @@ public class WaitForOrder extends Worker<OrionMule>
 	@Override
 	public void work()
 	{
+		mission.getScript().log(this, false, "Work");
 		if(client.isLoggedIn() && !mission.hasOrder)
 			logoutTab.logOut();
 			
