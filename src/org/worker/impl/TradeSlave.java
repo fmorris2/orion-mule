@@ -1,6 +1,7 @@
 package org.worker.impl;
 
 import org.OrionMule;
+import org.osbot.rs07.api.map.Position;
 
 import viking.api.Timing;
 import viking.framework.worker.Worker;
@@ -11,6 +12,7 @@ public class TradeSlave extends Worker<OrionMule>
 	private static final long CHECK_TIME = 45000; //updates slave info every 45 secs
 	
 	private long lastCheckTime;
+	private Position myPos;
 	
 	public TradeSlave(OrionMule mission)
 	{
@@ -34,7 +36,13 @@ public class TradeSlave extends Worker<OrionMule>
 			lastCheckTime = Timing.currentMs();
 		}
 		
-		if(myPosition().distance(mission.slavePos) < SLAVE_DIST_THRESH)
+		if(myPos == null)
+		{
+			mission.shouldLogin = true;
+			if(client.isLoggedIn())
+				myPos = myPosition();
+		}
+		else if(myPosition().distance(mission.slavePos) < SLAVE_DIST_THRESH)
 		{
 			mission.shouldLogin = true;
 			if(mission.hasBeenTradedWith)
@@ -46,6 +54,8 @@ public class TradeSlave extends Worker<OrionMule>
 		}
 		else //still waiting for slave to come
 		{
+			if(client.isLoggedIn())
+				logoutTab.logOut();
 			if(bot.getWorld() != mission.world)
 			{
 				script.log(this, false, "Hopping to slave world " + mission.world);
