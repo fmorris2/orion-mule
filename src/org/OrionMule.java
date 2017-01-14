@@ -106,6 +106,7 @@ public class OrionMule extends Mission implements CommandReceiver
 		}
 		
 		slavePos = new Position(x, y, z);
+		hasOrder = true;
 	}
 	
 	@Override
