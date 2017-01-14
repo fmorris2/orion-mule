@@ -63,6 +63,10 @@ public class TradeSlave extends Worker<OrionMule>
 			
 			if(client.isLoggedIn())
 				logoutTab.logOut();
+			
+			script.log(this, false, "Mule pos: " + myPos);
+			script.log(this, false, "Slave pos: " + mission.slavePos);
+			script.log(this, false, "Distance: " + myPos.distance(mission.slavePos));
 		}
 			
 	}
