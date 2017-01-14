@@ -51,6 +51,7 @@ public class TradeSlave extends Worker<OrionMule>
 		}
 		else if(myPos.distance(mission.slavePos) < SLAVE_DIST_THRESH)
 		{
+			script.log(this, false, "Time since start: " + Timing.timeFromMark(mission.orderStartTime));
 			mission.shouldLogin = true;
 			if(mission.hasBeenTradedWith)
 			{
