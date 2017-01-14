@@ -5,6 +5,7 @@ import org.osbot.rs07.api.ui.Message;
 import org.osbot.rs07.api.ui.Message.MessageType;
 import org.worker.OrionMuleWorkerManager;
 
+import viking.api.Timing;
 import viking.framework.command.CommandReceiver;
 import viking.framework.goal.GoalList;
 import viking.framework.goal.impl.InfiniteGoal;
@@ -20,6 +21,7 @@ public class OrionMule extends Mission implements CommandReceiver
 	public Position slavePos;
 	public String slaveName;
 	public int world;
+	public long orderStartTime;
 	public boolean hasOrder, shouldLogin, hasBeenTradedWith;
 	
 	public OrionMule(VikingScript script)
@@ -106,6 +108,9 @@ public class OrionMule extends Mission implements CommandReceiver
 		}
 		
 		slavePos = new Position(x, y, z);
+		if(!hasOrder)
+			orderStartTime = Timing.currentMs();
+		
 		hasOrder = true;
 	}
 	

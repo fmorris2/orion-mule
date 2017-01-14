@@ -10,6 +10,7 @@ public class TradeSlave extends Worker<OrionMule>
 {
 	private static final int SLAVE_DIST_THRESH = 15;
 	private static final long CHECK_TIME = 45000; //updates slave info every 45 secs
+	private static final long FAIL_SAFE = 60000 * 15; //15 minute fail safe
 	
 	private long lastCheckTime;
 	private Position myPos;
@@ -67,6 +68,13 @@ public class TradeSlave extends Worker<OrionMule>
 			script.log(this, false, "Mule pos: " + myPos);
 			script.log(this, false, "Slave pos: " + mission.slavePos);
 			script.log(this, false, "Distance: " + myPos.distance(mission.slavePos));
+			
+			if(Timing.timeFromMark(mission.orderStartTime) > FAIL_SAFE)
+			{
+				script.log(this, false, "Failsafe reached! Resetting....");
+				mission.hasOrder = false;
+				mission.ORION_MAIN.receiveCommand("mule:reset");
+			}
 		}
 			
 	}
