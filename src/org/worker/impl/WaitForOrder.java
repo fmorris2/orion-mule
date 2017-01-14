@@ -28,6 +28,7 @@ public class WaitForOrder extends Worker<OrionMule>
 		if(Timing.timeFromMark(lastCheckTime) > CHECK_TIME)
 		{
 			mission.getScript().log(this, false, "Checking for order");
+			mission.ORION_MAIN.receiveCommand("mule:poll");
 			lastCheckTime = Timing.currentMs();
 		}
 	}

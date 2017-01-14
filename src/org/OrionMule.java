@@ -1,5 +1,6 @@
 package org;
 
+import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.api.ui.Message;
 import org.osbot.rs07.api.ui.Message.MessageType;
 import org.worker.OrionMuleWorkerManager;
@@ -13,16 +14,18 @@ import viking.framework.worker.Worker;
 
 public class OrionMule extends Mission implements CommandReceiver
 {
-	private CommandReceiver orion_main;
+	public final CommandReceiver ORION_MAIN;
 	private OrionMuleWorkerManager workerManager = new OrionMuleWorkerManager(this);
 	
+	public Position slavePos;
 	public String slaveName;
+	public int world;
 	public boolean hasOrder, shouldLogin, hasBeenTradedWith;
 	
 	public OrionMule(VikingScript script)
 	{
 		super(script);
-		orion_main = (CommandReceiver)script;
+		ORION_MAIN = (CommandReceiver)script;
 	}
 
 	@Override
@@ -81,7 +84,28 @@ public class OrionMule extends Mission implements CommandReceiver
 	@Override
 	public void receiveCommand(String command)
 	{
+		script.log(this, false, "Received command: " + command);
 		
+		//receive order info
+		String[] firstParts = command.split(";");
+		if(firstParts.length == 0) return;
+		
+		int x = 0, y = 0, z = 0;
+		for(String part : firstParts)
+		{
+			String[] secondParts = part.split(":");
+			if(secondParts.length == 0) return;
+			
+			//set vars
+			String key = secondParts[0], val = secondParts[1];
+			if(key.equals("name")) slaveName = val;
+			else if(key.equals("world")) world = Integer.parseInt(val);
+			else if(key.equals("pos_x")) x = Integer.parseInt(val);
+			else if(key.equals("pos_y")) y = Integer.parseInt(val);
+			else if(key.equals("pos_z")) z = Integer.parseInt(val);
+		}
+		
+		slavePos = new Position(x, y, z);
 	}
 	
 	@Override
