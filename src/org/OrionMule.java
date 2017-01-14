@@ -100,9 +100,9 @@ public class OrionMule extends Mission implements CommandReceiver
 			String key = secondParts[0], val = secondParts[1];
 			if(key.equals("name")) slaveName = val;
 			else if(key.equals("world")) world = Integer.parseInt(val);
-			else if(key.equals("pos_x")) x = Integer.parseInt(val);
-			else if(key.equals("pos_y")) y = Integer.parseInt(val);
-			else if(key.equals("pos_z")) z = Integer.parseInt(val);
+			else if(key.equals("x")) x = Integer.parseInt(val);
+			else if(key.equals("y")) y = Integer.parseInt(val);
+			else if(key.equals("z")) z = Integer.parseInt(val);
 		}
 		
 		slavePos = new Position(x, y, z);
