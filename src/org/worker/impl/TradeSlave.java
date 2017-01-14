@@ -54,8 +54,11 @@ public class TradeSlave extends Worker<OrionMule>
 		}
 		else //still waiting for slave to come
 		{
+			mission.shouldLogin = false;
+			
 			if(client.isLoggedIn())
 				logoutTab.logOut();
+			
 			if(bot.getWorld() != mission.world)
 			{
 				script.log(this, false, "Hopping to slave world " + mission.world);
