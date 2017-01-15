@@ -153,6 +153,9 @@ public class TradeSlave extends Worker<OrionMule>
 		((CommandReceiver)(script)).receiveCommand("mule:complete:"+tradeValue);
 		logoutTab.logOut();
 		mission.tradeComplete = false;
+		mission.hasOrder = false;
+		mission.slaveName = null;
+		mission.slavePos = null;
 	}
 	
 }
