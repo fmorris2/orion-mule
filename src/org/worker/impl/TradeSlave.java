@@ -94,18 +94,19 @@ public class TradeSlave extends Worker<OrionMule>
 		if(script.trade.isCurrentlyTrading())
 		{
 			script.log(this, false, "Trade is currently open with slave....");
+			RS2Widget accept = widgets.getWidgetContainingText("Accept");
 			boolean isSecondInter = trade.isSecondInterfaceOpen();
-			if(trade.didOtherAcceptTrade() || isSecondInter)
+			if(isSecondInter)
+				parseTradeVal();
+			
+			if(accept != null && accept.interact())
 			{
-				if(isSecondInter)
-					parseTradeVal();
+				script.log(this, false, "Accepting through trade...");
 				
-				if(trade.acceptTrade())
+				if(isSecondInter && Timing.waitCondition(() -> !trade.isCurrentlyTrading(), 3500))
 				{
-					script.log(this, false, "Successfully accepted trade!");
-					
-					if(isSecondInter && Timing.waitCondition(() -> !trade.isCurrentlyTrading(), 3500))
-						completeOrder();
+					script.log(this, false, "Successfully completed trade");
+					completeOrder();
 				}
 			}
 			else
@@ -148,6 +149,7 @@ public class TradeSlave extends Worker<OrionMule>
 	{
 		script.log(this, false, "Complete order");
 		((CommandReceiver)(script)).receiveCommand("mule:complete:"+tradeValue);
+		logoutTab.logOut();
 	}
 	
 }
