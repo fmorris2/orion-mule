@@ -65,7 +65,7 @@ public class TradeSlave extends Worker<OrionMule>
 			else if(worlds.getCurrentWorld() != mission.world)
 			{
 				script.log(this, false, "Hopping to slave world " + mission.world);
-				worlds.hop(mission.world % 100);
+				hopper.hop(mission.world);
 			}
 			else
 				script.log(this, false, "Waiting for trade request from slave");
