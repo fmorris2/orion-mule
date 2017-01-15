@@ -118,7 +118,7 @@ public class TradeSlave extends Worker<OrionMule>
 			script.log(this, false, "Opening trade with slave");
 			Player slave = script.trade.getLastRequestingPlayer();
 			if(slave != null && slave.getName().equals(mission.slaveName) && slave.interact("Trade with")
-					&& Timing.waitCondition(() -> trade.isCurrentlyTrading(), 3500))
+					&& Timing.waitCondition(() -> trade.isCurrentlyTrading(), 5000))
 				mission.hasBeenTradedWith = false;
 		}
 	}
