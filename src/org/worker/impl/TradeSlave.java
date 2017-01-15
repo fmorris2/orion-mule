@@ -58,6 +58,8 @@ public class TradeSlave extends Worker<OrionMule>
 			mission.ORION_MAIN.receiveCommand("mule:reset");
 			mission.waitMs(3000);
 		}
+		else if(mission.tradeComplete)
+			completeOrder();
 		else if(myPos.distance(mission.slavePos) < SLAVE_DIST_THRESH)
 		{
 			script.log(this, false, "Time since start: " + Timing.timeFromMark(mission.orderStartTime));
@@ -103,7 +105,7 @@ public class TradeSlave extends Worker<OrionMule>
 			{
 				script.log(this, false, "Accepting through trade...");
 				
-				if(isSecondInter && Timing.waitCondition(() -> !trade.isCurrentlyTrading(), 3500))
+				if(isSecondInter && Timing.waitCondition(() -> mission.tradeComplete, 3500))
 				{
 					script.log(this, false, "Successfully completed trade");
 					completeOrder();
@@ -150,6 +152,7 @@ public class TradeSlave extends Worker<OrionMule>
 		script.log(this, false, "Complete order");
 		((CommandReceiver)(script)).receiveCommand("mule:complete:"+tradeValue);
 		logoutTab.logOut();
+		mission.tradeComplete = false;
 	}
 	
 }

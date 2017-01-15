@@ -22,7 +22,7 @@ public class OrionMule extends Mission implements CommandReceiver
 	public String slaveName;
 	public int world;
 	public long orderStartTime;
-	public boolean hasOrder, shouldLogin, hasBeenTradedWith;
+	public boolean hasOrder, shouldLogin, hasBeenTradedWith, tradeComplete;
 	
 	public OrionMule(VikingScript script)
 	{
@@ -117,11 +117,17 @@ public class OrionMule extends Mission implements CommandReceiver
 	@Override
 	public void onMessage(Message m)
 	{
-		if(m != null && m.getType() == MessageType.RECEIVE_TRADE && m.getMessage().contains(slaveName))
+		if(m == null)
+			return;
+		
+		if(m.getType() == MessageType.RECEIVE_TRADE && m.getMessage().contains(slaveName))
 		{
 			script.log(this, false, "Mule has received trade from slave!");
 			hasBeenTradedWith = true;
 		}
+		
+		if(m.getType() == MessageType.GAME && m.getMessage().contains("Accepted trade"))
+			tradeComplete = true;
 	}
 
 }
