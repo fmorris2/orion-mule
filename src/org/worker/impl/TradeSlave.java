@@ -1,8 +1,12 @@
 package org.worker.impl;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.OrionMule;
 import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.api.model.Player;
+import org.osbot.rs07.api.ui.RS2Widget;
 
 import viking.api.Timing;
 import viking.framework.command.CommandReceiver;
@@ -11,6 +15,7 @@ import viking.framework.worker.Worker;
 public class TradeSlave extends Worker<OrionMule>
 {
 	private static final int SLAVE_DIST_THRESH = 15;
+	private static final int VALUE_MASTER = 334, VALUE_CHILD = 24;
 	private static final long CHECK_TIME = 45000; //updates slave info every 45 secs
 	private static final long FAIL_SAFE = 60000 * 12; //15 minute fail safe
 	
@@ -119,6 +124,23 @@ public class TradeSlave extends Worker<OrionMule>
 	private void parseTradeVal()
 	{
 		script.log(this, false, "Parse trade value");
+		RS2Widget valWidget = script.widgets.get(VALUE_MASTER, VALUE_CHILD);
+		if(valWidget == null)
+			return;
+		
+		String toParse = valWidget.getMessage();
+		
+		if(toParse == null)
+			return;
+		
+		Pattern p = Pattern.compile("-?\\d+");
+		Matcher m = p.matcher(toParse);
+		String parsedNumbers = "";
+		while (m.find()) 
+			parsedNumbers += m.group();
+		
+		tradeValue = Integer.parseInt(parsedNumbers);
+		script.log(this, false, "Parsed trade value: " + tradeValue);
 	}
 	
 	private void completeOrder()
