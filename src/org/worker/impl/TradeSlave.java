@@ -48,6 +48,7 @@ public class TradeSlave extends Worker<OrionMule>
 			script.log(this, false, "Failsafe reached! Resetting....");
 			mission.hasOrder = false;
 			mission.ORION_MAIN.receiveCommand("mule:reset");
+			mission.waitMs(3000);
 		}
 		else if(myPos.distance(mission.slavePos) < SLAVE_DIST_THRESH)
 		{
