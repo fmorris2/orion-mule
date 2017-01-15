@@ -62,7 +62,7 @@ public class TradeSlave extends Worker<OrionMule>
 		{
 			script.log(this, false, "Time since start: " + Timing.timeFromMark(mission.orderStartTime));
 			mission.shouldLogin = true;
-			if(mission.hasBeenTradedWith)
+			if(trade.isCurrentlyTrading() || mission.hasBeenTradedWith)
 			{
 				script.log(this, false, "Received trade request from slave! Going through trade process....");
 				goThroughTrade();
@@ -116,8 +116,9 @@ public class TradeSlave extends Worker<OrionMule>
 		{
 			script.log(this, false, "Opening trade with slave");
 			Player slave = script.trade.getLastRequestingPlayer();
-			if(slave != null && slave.getName().equals(mission.slaveName) && slave.interact("Trade with"))
-				Timing.waitCondition(() -> trade.isCurrentlyTrading(), 3500);
+			if(slave != null && slave.getName().equals(mission.slaveName) && slave.interact("Trade with")
+					&& Timing.waitCondition(() -> trade.isCurrentlyTrading(), 3500))
+				mission.hasBeenTradedWith = false;
 		}
 	}
 	
