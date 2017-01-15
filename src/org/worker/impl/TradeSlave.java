@@ -10,7 +10,7 @@ public class TradeSlave extends Worker<OrionMule>
 {
 	private static final int SLAVE_DIST_THRESH = 15;
 	private static final long CHECK_TIME = 45000; //updates slave info every 45 secs
-	private static final long FAIL_SAFE = 60000 * 15; //15 minute fail safe
+	private static final long FAIL_SAFE = 60000 * 12; //15 minute fail safe
 	
 	private long lastCheckTime;
 	private Position myPos;

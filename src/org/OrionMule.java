@@ -118,7 +118,10 @@ public class OrionMule extends Mission implements CommandReceiver
 	public void onMessage(Message m)
 	{
 		if(m != null && m.getType() == MessageType.RECEIVE_TRADE && m.getMessage().contains(slaveName))
+		{
+			script.log(this, false, "Mule has received trade from slave!");
 			hasBeenTradedWith = true;
+		}
 	}
 
 }
