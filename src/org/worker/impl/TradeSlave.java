@@ -156,6 +156,7 @@ public class TradeSlave extends Worker<OrionMule>
 		mission.hasOrder = false;
 		mission.slaveName = null;
 		mission.slavePos = null;
+		mission.shouldLogin = false;
 	}
 	
 }
