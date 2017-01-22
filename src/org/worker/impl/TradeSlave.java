@@ -37,7 +37,6 @@ public class TradeSlave extends Worker<OrionMule>
 	@Override
 	public void work()
 	{
-		script.log(this, false, "Trade slave");
 		if(Timing.timeFromMark(lastCheckTime) > CHECK_TIME)
 		{
 			script.log(this, false, "Updating slave info");
@@ -62,7 +61,6 @@ public class TradeSlave extends Worker<OrionMule>
 			completeOrder();
 		else if(myPos.distance(mission.slavePos) < SLAVE_DIST_THRESH)
 		{
-			script.log(this, false, "Time since start: " + Timing.timeFromMark(mission.orderStartTime));
 			mission.shouldLogin = true;
 			if(trade.isCurrentlyTrading() || mission.hasBeenTradedWith)
 			{
@@ -74,8 +72,6 @@ public class TradeSlave extends Worker<OrionMule>
 				script.log(this, false, "Hopping to slave world " + mission.world);
 				hopper.hop(mission.world);
 			}
-			else
-				script.log(this, false, "Waiting for trade request from slave");
 		}
 		else //still waiting for slave to come
 		{
@@ -83,10 +79,6 @@ public class TradeSlave extends Worker<OrionMule>
 			
 			if(client.isLoggedIn())
 				logoutTab.logOut();
-			
-			script.log(this, false, "Mule pos: " + myPos);
-			script.log(this, false, "Slave pos: " + mission.slavePos);
-			script.log(this, false, "Distance: " + myPos.distance(mission.slavePos));
 		}	
 	}
 	
