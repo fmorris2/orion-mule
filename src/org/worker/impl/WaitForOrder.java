@@ -25,8 +25,15 @@ public class WaitForOrder extends Worker<OrionMule>
 	@Override
 	public void work()
 	{
-		if(client.isLoggedIn() && !mission.hasOrder)
-			logoutTab.logOut();
+		try
+		{
+			if(client.isLoggedIn() && !mission.hasOrder)
+				logoutTab.logOut();
+		}
+		catch(NullPointerException e)
+		{
+			script.log(this, false, "There was a NPE in the OSBot API when attempting to log out");
+		}
 		
 		if(Timing.timeFromMark(lastCheckTime) > CHECK_TIME)
 		{
