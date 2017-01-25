@@ -28,7 +28,10 @@ public class WaitForOrder extends Worker<OrionMule>
 		try
 		{
 			if(client.isLoggedIn() && !mission.hasOrder)
+			{
 				logoutTab.logOut();
+				mission.shouldLogin = false;
+			}
 		}
 		catch(NullPointerException e)
 		{
