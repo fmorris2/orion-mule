@@ -90,7 +90,12 @@ public class OrionMule extends Mission implements CommandReceiver
 		
 		//receive order info
 		String[] firstParts = command.split(";");
-		if(firstParts.length == 0) return;
+		if(firstParts.length == 0) //means we don't currently have an order
+		{
+			hasOrder = false;
+			shouldLogin = false;
+			return;
+		}
 		
 		int x = 0, y = 0, z = 0;
 		for(String part : firstParts)

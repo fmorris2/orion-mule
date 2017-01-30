@@ -97,7 +97,7 @@ public class TradeSlave extends Worker<OrionMule>
 			{
 				script.log(this, false, "Accepting through trade...");
 				
-				if(isSecondInter && Timing.waitCondition(() -> mission.tradeComplete, 3500))
+				if(isSecondInter && Timing.waitCondition(() -> mission.tradeComplete, 10000))
 				{
 					script.log(this, false, "Successfully completed trade");
 					completeOrder();
