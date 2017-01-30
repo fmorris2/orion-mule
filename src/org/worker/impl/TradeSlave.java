@@ -149,6 +149,8 @@ public class TradeSlave extends Worker<OrionMule>
 		mission.slaveName = null;
 		mission.slavePos = null;
 		mission.shouldLogin = false;
+		mission.hasBeenTradedWith = false;
+		waitMs(10000); //so OCC can execute query and change can be made in DB before we move on
 	}
 	
 }
